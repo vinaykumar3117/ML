@@ -11,7 +11,7 @@ Main tensors:
     tf.placeholder
     tf.SparseTensor
 
-https://www.tensorflow.org/programmers_guide/tensors
+Ref - https://www.tensorflow.org/programmers_guide/tensors 
 Tensorflow Intro - https://www.youtube.com/watch?v=uh2Fh6df7Lg
 
 ------------------------------------------------------------------------------------
