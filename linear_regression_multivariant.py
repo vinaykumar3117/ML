@@ -9,6 +9,7 @@ data = pd.read_csv('california_housing_train.csv')
 #print data.head()
 #print data['total_bedrooms']
 
+# Data is dataframe here, need to convert this object to list.
 var1 = data['total_bedrooms'].tolist()
 var2 = data['households'].tolist()
 y = data['median_income'].tolist()
@@ -40,10 +41,22 @@ cost = tf.reduce_sum(tf.square(pred - Y))/(2*size)
 optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 
 for i in range(epoch):
+    # We can also pass individual values of var1, var2 and y  by extracting it as zip.
     sess.run(optimizer, {X1:var1, X2:var2, Y:y})
-    print sess.run(cost, {X1: var1, X2: var2, Y: y})
+    #print sess.run(cost, {X1: var1, X2: var2, Y: y})
 
+print "Final cost value: ", sess.run(cost, {X1: var1, X2: var2, Y: y})
 print "W1: ", sess.run(W1)
 print "W2: ", sess.run(W1)
 print "b: ", sess.run(b)
 
+
+"""
+--------- Output ----------
+
+Final cost value:  10.615431
+W1:  [-0.00725167]
+W2:  [-0.00725167]
+b:  [-3.001202]
+
+"""
