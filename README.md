@@ -171,7 +171,7 @@ Linear regression
  Linear regression is a statistical model that examines the linear relationship between two (Simple Linear Regression ) or more (Multiple Linear Regression) variables - a dependent variable and independent variable(s). Linear relationship basically means that when one (or more) independent variables increases (or decreases), the dependent variable increases (or decreases) too
 
 Ref : https://towardsdatascience.com/simple-and-multiple-linear-regression-in-python-c928425168f9
-Program - linear_regression.py
+Program - linear_regression.py, Linear_regression_sklearn.py
 
 ------------------------------------------------------------------------------------
 Linear regression with multivariant
@@ -186,9 +186,53 @@ california_housing_train.csv
 
 Ref - https://towardsdatascience.com/simple-and-multiple-linear-regression-in-python-c928425168f9
       https://www.youtube.com/watch?v=kllogfBujLs
-Program - linear_regression_multivariant.py
+Program - linear_regression_multivariant.py, Linear_regression_sklearn_csv.py
 
 ------------------------------------------------------------------------------------
 Logistic regression
+
+Logistic regression predicts the probability of an outcome that can only have two values (i.e. a dichotomy). 
+Logistic Regression is used when the dependent variable(target) is categorical. 
+For example, 
+- To predict whether an email is spam (1) or (0)
+- Whether the tumor is malignant (1) or not (0)
+
+pred = tf.nn.softmax(tf.matmul(x, W) + b) # Softmax
+=> (x * W) + b
+=> ((1 x 784) * (784 x 10)) + (1 x 10)
+=> (1 x 10) + (1 x 10)
+=> (1 x 10)
+
+cost = tf.reduce_mean(-tf.reduce_sum(y*tf.log(pred), reduction_indices=1))
+tf.log(pred) -> First, tf.log computes the logarithm of each element of pred. 
+(y*tf.log(pred) -> Next, we multiply each element of y with the corresponding element of tf.log(pred). 
+tf.reduce_sum(y*tf.log(pred) -> Then tf.reduce_sum adds the elements in the second dimension of pred, due to the reduction_indices=[1] parameter. 
+	y = (1 x 10)
+	batch size = 100
+	result batch = (1 x 100), reduction_indices=[1] implies summing each element of vector in batch of 100
+	e.g. one prediction vector will be like this
+	[6.99726615e-06 + 1.82647607e-04 + 9.94143784e-01 + 4.29605879e-03 + 1.90415940e-05 + 5.07002114e-05 + 1.90451276e-04 + 7.19771407e-08 + 1.09627761e-03 + 1.39646618e-05] = 0.999999994993
+tf.reduce_mean() -> Finally, tf.reduce_mean computes the mean over all the examples in the batch.
+
+
+Output pred vs label:
+ [2.81254568e-11 9.95265177e-13 2.02638359e-04 8.97943508e-04
+  1.21668552e-06 9.40459373e-04 3.04663450e-09 6.78048934e-07
+  9.96642828e-01 1.31431560e-03]								===> [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.] = 8 (high density value in vector)
+[1.08923472e-03 1.72849496e-07 5.93256671e-03 3.49515933e-04
+  6.75066784e-02 2.29581189e-03 6.28186448e-04 5.75977750e-02
+  3.00991908e-02 8.34500849e-01]								===> [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.] = 9 (high density value in vector)
+
+>>> print("Actual : Prediction")
+Actual : Prediction
+>>> for a_vec, p_vec in zip(actual_values, predicted_values):
+...     print("%d : %d" % (a_vec.index(max(a_vec)), p_vec.index(max(p_vec))))
+...
+8 : 8
+9 : 9
+
+
+Ref - https://www.tensorflow.org/versions/r1.3/get_started/mnist/beginners
+Program - logistic_regression.py, Logistic_regression_sklearn_csv.py
 
 
